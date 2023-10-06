@@ -1,5 +1,12 @@
-import 'package:flutter/material.dart';
 
+import 'dart:ffi';
+
+import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'quiz_brain.dart';
+
+QuizzBrain quizzBrain=QuizzBrain();
+int length=quizzBrain.getLength();
 
 void main() => runApp(Quizzler());
 
@@ -9,11 +16,12 @@ class Quizzler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: QuizPage(),
           ),
         ),
@@ -33,16 +41,59 @@ class _QuizPageState extends State<QuizPage> {
 
 
 
-   int i=0;
-  List<Widget> score_keeper=[];
-  List<String> questions=['You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-  'A slug\'s blood is green'];
 
+  List<Widget> score_keeper=[];
+  // List<String> questions=['You can lead a cow down stairs but not up stairs.',
+  //   'Approximately one quarter of human bones are in the feet.',
+  // 'A slug\'s blood is green'];
+  // List<bool> answers=[false,true,true];
+   void checkAnswer(bool userInputAnswer){
+     setState(() {
+
+       if (quizzBrain.limitReached()){
+         onBasicWaitingAlertPressed(context) async {
+           Alert(
+             context: context,
+             title: "End Of The Quiz",
+             desc: "You have completed the entire Quizz.Press Cancel to start again.",
+           ).show();
+           quizzBrain.resetQuestion();
+           score_keeper = [];
+         }
+         onBasicWaitingAlertPressed(context);
+
+
+       }else {
+         if (quizzBrain.getAnswer() == userInputAnswer) {
+           score_keeper.add(
+               Icon(
+                 Icons.check,
+                 color: Colors.green,
+               )
+           );
+         }
+         else {
+           score_keeper.add(
+               Icon(
+                 Icons.close,
+                 color: Colors.red,
+               )
+           );
+         }
+         quizzBrain.nextQuestion();
+       }
+
+     });
+
+
+   }
 
 
   @override
   Widget build(BuildContext context) {
+
+
+
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,7 +105,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[i],
+                quizzBrain.getQuestion(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -83,21 +134,10 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  i++;
-                  if(i>=3){
-                    i=0;
-                  }
-                });
+                checkAnswer(true);
                 //The user picked true.
                 // setState(() {
-                //   score_keeper.add(
-                //     Icon(
-                //       Icons.check,
-                //       color: Colors.green,
-                //     )
-                //   );
-                // });
+                //
               },
             ),
           ),
@@ -120,12 +160,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  i++;
-                  if(i>=3){
-                    i=0;
-                  }
-                });
+                checkAnswer(false);
+
                 //The user picked false.
                 // setState(() {
                 //   score_keeper.add(
