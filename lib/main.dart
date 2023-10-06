@@ -1,14 +1,26 @@
 
-import 'dart:ffi';
 
+import 'dart:io';
+
+import 'getApi.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'quiz_brain.dart';
 
-QuizzBrain quizzBrain=QuizzBrain();
-int length=quizzBrain.getLength();
+// QuizzBrain quizzBrain=QuizzBrain();
+// int length=quizzBrain.getLength();
 
-void main() => runApp(Quizzler());
+QuestionGenerator quizzBrain=QuestionGenerator();
+
+
+void main() {
+
+  var duration = const Duration(seconds: 1);
+
+  sleep(duration);
+
+  runApp(Quizzler());
+}
 
 class Quizzler extends StatelessWidget {
 
@@ -55,7 +67,7 @@ class _QuizPageState extends State<QuizPage> {
            Alert(
              context: context,
              title: "End Of The Quiz",
-             desc: "You have completed the entire Quizz.Press Cancel to start again.",
+             desc: "You have completed the entire Quizz.New set of questions will be comming now.",
            ).show();
            quizzBrain.resetQuestion();
            score_keeper = [];
