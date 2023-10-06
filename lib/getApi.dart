@@ -22,8 +22,8 @@ import 'package:dio/dio.dart';
 
 class QuestionGenerator{
   int questionNumber=0;
-  List<String> ques=[];
-  List<bool> answers=[];
+  List<String> ques=["Hello"];
+  List<String> answers=["True"];
   QuestionGenerator() {
     initialize();
 
@@ -31,12 +31,13 @@ class QuestionGenerator{
   void initialize() async{
     Dio dio = Dio();
     var res = await dio.get(
-        "https://opentdb.com/api.php?amount=10&type=boolean");
+        "https://opentdb.com/api.php?amount=10&category=17");
     var data=res.data;
 
     for(int i=0;i<10;i++){
       String question=data["results"][i]["question"];
-      bool answer=data["results"][i]["correct_answer"];
+      String answer=data["results"][i]["correct_answer"];
+
       this.ques.add(question);
       this.answers.add(answer);
 
@@ -44,10 +45,10 @@ class QuestionGenerator{
   }
 
   String getQuestion(){
-    initialize();
+
     return ques[questionNumber];
   }
-  bool getAnswer(){
+  String getAnswer(){
     return answers[questionNumber];
   }
 
@@ -55,14 +56,12 @@ class QuestionGenerator{
     if (questionNumber<ques.length-1){
       questionNumber++;
     }
-    else{
-      questionNumber=0;
-    }
+
   }
 
 
   bool limitReached(){
-    if (ques==ques.length-1){
+    if (questionNumber>=ques.length-1){
       return true;
     }
     return false;

@@ -16,6 +16,7 @@ QuestionGenerator quizzBrain=QuestionGenerator();
 void main() {
 
   var duration = const Duration(seconds: 1);
+  quizzBrain.initialize();
 
   sleep(duration);
 
@@ -59,7 +60,7 @@ class _QuizPageState extends State<QuizPage> {
   //   'Approximately one quarter of human bones are in the feet.',
   // 'A slug\'s blood is green'];
   // List<bool> answers=[false,true,true];
-   void checkAnswer(bool userInputAnswer){
+   void checkAnswer(String userInputAnswer){
      setState(() {
 
        if (quizzBrain.limitReached()){
@@ -92,7 +93,9 @@ class _QuizPageState extends State<QuizPage> {
                )
            );
          }
-         quizzBrain.nextQuestion();
+         if(quizzBrain.getLength()>=10) {
+           quizzBrain.nextQuestion();
+         }
        }
 
      });
@@ -146,7 +149,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                checkAnswer(true);
+                checkAnswer("True");
                 //The user picked true.
                 // setState(() {
                 //
@@ -172,7 +175,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                checkAnswer(false);
+                checkAnswer("False");
 
                 //The user picked false.
                 // setState(() {
