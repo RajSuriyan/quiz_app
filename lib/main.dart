@@ -14,6 +14,7 @@ QuestionGenerator quizzBrain=QuestionGenerator();
 
 
 void main() {
+  quizzBrain.initialize();
 
   var duration = const Duration(seconds: 1);
   quizzBrain.initialize();
@@ -63,14 +64,14 @@ class _QuizPageState extends State<QuizPage> {
    void checkAnswer(String userInputAnswer){
      setState(() {
 
-       if (quizzBrain.limitReached()){
+       if (quizzBrain.limitReached() || score_keeper.length==10){
          onBasicWaitingAlertPressed(context) async {
            Alert(
              context: context,
              title: "End Of The Quiz",
              desc: "You have completed the entire Quizz.New set of questions will be comming now.",
            ).show();
-           quizzBrain.resetQuestion();
+           quizzBrain.initialize();
            score_keeper = [];
          }
          onBasicWaitingAlertPressed(context);

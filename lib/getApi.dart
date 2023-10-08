@@ -22,7 +22,7 @@ import 'package:dio/dio.dart';
 
 class QuestionGenerator{
   int questionNumber=0;
-  List<String> ques=["Hello"];
+  List<String> ques=["Hello, Click True to proceed the quiz!1"];
   List<String> answers=["True"];
   QuestionGenerator() {
     initialize();
@@ -31,7 +31,7 @@ class QuestionGenerator{
   void initialize() async{
     Dio dio = Dio();
     var res = await dio.get(
-        "https://opentdb.com/api.php?amount=10&category=17");
+        "https://opentdb.com/api.php?amount=10&category=17&type=boolean");
     var data=res.data;
 
     for(int i=0;i<10;i++){
