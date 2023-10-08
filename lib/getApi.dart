@@ -22,7 +22,7 @@ import 'package:dio/dio.dart';
 
 class QuestionGenerator{
   int questionNumber=0;
-  List<String> ques=["Hello, Click True to proceed the quiz!1"];
+  List<String> ques=["Hello, Click True to proceed the quiz!!"];
   List<String> answers=["True"];
   QuestionGenerator() {
     initialize();
