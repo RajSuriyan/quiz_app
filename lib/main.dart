@@ -16,10 +16,10 @@ QuestionGenerator quizzBrain=QuestionGenerator();
 void main() {
   quizzBrain.initialize();
 
-  var duration = const Duration(seconds: 1);
+
   quizzBrain.initialize();
 
-  sleep(duration);
+
 
   runApp(Quizzler());
 }
