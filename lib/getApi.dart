@@ -76,6 +76,7 @@ class QuestionGenerator{
 
   void popOne(){
     ques.removeAt(0);
+    answers.removeAt(0);
     initialize();
   }
 
