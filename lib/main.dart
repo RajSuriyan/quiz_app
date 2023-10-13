@@ -1,11 +1,11 @@
 
 
-import 'dart:io';
+
 
 import 'getApi.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'quiz_brain.dart';
+// import 'quiz_brain.dart';
 
 // QuizzBrain quizzBrain=QuizzBrain();
 // int length=quizzBrain.getLength();
@@ -14,12 +14,6 @@ QuestionGenerator quizzBrain=QuestionGenerator();
 
 
 void main() {
-  quizzBrain.initialize();
-
-
-  quizzBrain.initialize();
-
-
 
   runApp(Quizzler());
 }
@@ -79,20 +73,30 @@ class _QuizPageState extends State<QuizPage> {
 
        }else {
          if (quizzBrain.getAnswer() == userInputAnswer) {
+
+
            score_keeper.add(
                Icon(
                  Icons.check,
                  color: Colors.green,
                )
            );
+           if(quizzBrain.ques[0]=="Hello, Click True to proceed the quiz!!"){
+             score_keeper=[];quizzBrain.popOne();
+           }
          }
          else {
+
            score_keeper.add(
                Icon(
                  Icons.close,
                  color: Colors.red,
                )
            );
+           if(quizzBrain.ques[0]=="Hello, Click True to proceed the quiz!!"){
+             score_keeper=[];
+             quizzBrain.popOne();
+           }
          }
          if(quizzBrain.getLength()>=10) {
            quizzBrain.nextQuestion();
@@ -107,6 +111,7 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
+
 
 
 

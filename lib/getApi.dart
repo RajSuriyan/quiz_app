@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:dio/dio.dart';
 // int i=0;
@@ -72,6 +72,11 @@ class QuestionGenerator{
   }
   int getLength(){
     return ques.length;
+  }
+
+  void popOne(){
+    ques.removeAt(0);
+    initialize();
   }
 
 }
